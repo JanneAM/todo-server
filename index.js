@@ -10,11 +10,11 @@ dotenv.config();
 
 const app = express();
 
-app.use('/items', itemRoutes);
-
 app.use(bodyParser.json({extended:true}));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
+
+app.use('/items', itemRoutes);
 
 const PORT = process.env.PORT || 5000;
 
