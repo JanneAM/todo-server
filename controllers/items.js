@@ -1,3 +1,4 @@
+import { Mongoose } from 'mongoose';
 import ItemMessage from '../models/itemMessage.js';
 
 export const getItems = async (req, res) => {
@@ -22,4 +23,15 @@ export const createItem = async (req,res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+}
+
+export const updateItem = async (req, res) => {
+    const { id: _id } = req.params;
+    const item = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_Id)) return res.status(404).send('No item with that id');
+
+    const updatedItem = ItemMessage.findByIdAndUpdate(_id, item, {new: true});
+
+    res.json(updatedItem);
 }
