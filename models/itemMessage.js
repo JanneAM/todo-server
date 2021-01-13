@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const itemSchema = mongoose.Schema({
     title: String,
     message: String,
-    done: Boolean,
+    done: {
+        type: Boolean,
+        default: false
+    },
     createdAt:{
         type: Date,
         default: new Date()
