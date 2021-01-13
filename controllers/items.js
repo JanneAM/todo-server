@@ -1,4 +1,6 @@
-import { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
+
+
 import ItemMessage from '../models/itemMessage.js';
 
 export const getItems = async (req, res) => {
@@ -25,13 +27,23 @@ export const createItem = async (req,res) => {
     }
 }
 
-export const updateItem = async (req, res) => {
+export const checkItemDone = async (req, res) => {
     const { id: _id } = req.params;
     const item = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(_Id)) return res.status(404).send('No item with that id');
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No item with that id');
 
-    const updatedItem = ItemMessage.findByIdAndUpdate(_id, item, {new: true});
+    const checkedItem = await ItemMessage.findByIdAndUpdate(_id, item, { new: true });
 
-    res.json(updatedItem);
+    res.json(checkedItem);
+}
+
+export const deleteItem = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No item with that id');
+
+    await ItemMessage.findByIdAndRemove(id);
+
+    res.json({ message: 'Post deleted successfully' });
 }
